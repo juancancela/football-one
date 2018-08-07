@@ -1,0 +1,15 @@
+{
+  "accounting.js": "/assets/accounting.chunk.js",
+  "accounting~clients~home~not-found~products~reports~reservations.js": "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
+  "client.js": "/assets/client.js",
+  "clients.js": "/assets/clients.chunk.js",
+  "home.js": "/assets/home.chunk.js",
+  "not-found.js": "/assets/not-found.chunk.js",
+  "polyfills.js": "/assets/polyfills.chunk.js",
+  "products.js": "/assets/products.chunk.js",
+  "reports.js": "/assets/reports.chunk.js",
+  "reservations.js": "/assets/reservations.chunk.js",
+  "vendors.js": "/assets/vendors.chunk.js",
+  "vendors~graphql-tag.js": "/assets/vendors~graphql-tag.chunk.js",
+  "vendors~polyfills.js": "/assets/vendors~polyfills.chunk.js"
+}

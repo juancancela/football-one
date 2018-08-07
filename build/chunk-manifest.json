@@ -1,0 +1,47 @@
+{
+  "client": [
+    "/assets/vendors.chunk.js",
+    "/assets/client.js"
+  ],
+  "polyfills": [
+    "/assets/vendors~polyfills.chunk.js",
+    "/assets/polyfills.chunk.js"
+  ],
+  "home": [
+    "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
+    "/assets/home.chunk.js",
+    "/assets/home.2eeabf412b72aa678a8e.hot-update.js"
+  ],
+  "accounting": [
+    "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
+    "/assets/accounting.chunk.js",
+    "/assets/accounting.2eeabf412b72aa678a8e.hot-update.js"
+  ],
+  "clients": [
+    "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
+    "/assets/clients.chunk.js",
+    "/assets/clients.2eeabf412b72aa678a8e.hot-update.js"
+  ],
+  "products": [
+    "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
+    "/assets/products.chunk.js",
+    "/assets/products.2eeabf412b72aa678a8e.hot-update.js"
+  ],
+  "reports": [
+    "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
+    "/assets/reports.chunk.js",
+    "/assets/reports.2eeabf412b72aa678a8e.hot-update.js"
+  ],
+  "reservations": [
+    "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
+    "/assets/reservations.chunk.js",
+    "/assets/reservations.2eeabf412b72aa678a8e.hot-update.js"
+  ],
+  "not-found": [
+    "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
+    "/assets/not-found.chunk.js"
+  ],
+  "graphql-tag": [
+    "/assets/vendors~graphql-tag.chunk.js"
+  ]
+}
