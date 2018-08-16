@@ -7,12 +7,10 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-const path = require('path');
-
-// This is a custom Jest transformer turning file imports into filenames.
-// http://facebook.github.io/jest/docs/tutorial-webpack.html
+// Prettier configuration
+// https://prettier.io/docs/en/configuration.html
 module.exports = {
-  process(src, filename) {
-    return `module.exports = ${JSON.stringify(path.basename(filename))};`;
-  },
+  printWidth: 80,
+  singleQuote: true,
+  trailingComma: 'all',
 };

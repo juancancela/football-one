@@ -2,7 +2,7 @@ import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './HomePage.css';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
-import * as c from '../../constants';
+import * as c from '../../appConstants';
 
 class HomePage extends React.Component {
   render() {
