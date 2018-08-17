@@ -33,6 +33,9 @@ import { setRuntimeVariable } from './actions/runtime';
 import { setLocale } from './actions/intl';
 import config from './config';
 
+// import Application API routes
+import apiRouter from './api/index';
+
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
   // send entire app down. Process manager will restart it
@@ -47,6 +50,12 @@ global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'all';
 
 const app = express();
+
+//
+// Application API
+// -----------------------------------------------------------------------------
+app.use(apiRouter);
+
 
 //
 // If you are using proxy from external machine, you can set TRUST_PROXY env
