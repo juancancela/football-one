@@ -1,0 +1,29 @@
+@import '../variables.css';
+
+.sectionContainer {
+  margin: 5px;
+};
+
+.tableContainer {
+  margin-top: 5px;
+  margin-bottom: 5px;
+};
+
+.appTable {
+  color: #797979;
+  max-width: 500px;
+  table-layout: fixed; width: 100%
+}
+
+.appTable td {
+  border-top: none;
+}
+
+.actionIcon:hover {
+  color: blue;
+  cursor: pointer;
+}
+
+.tableLink {
+  color: #797979;
+}

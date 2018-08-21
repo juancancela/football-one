@@ -8,31 +8,26 @@
     "/assets/polyfills.chunk.js"
   ],
   "home": [
-    "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
     "/assets/home.chunk.js"
   ],
   "accounting": [
-    "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
     "/assets/accounting.chunk.js"
   ],
   "clients": [
-    "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
-    "/assets/clients.chunk.js"
+    "/assets/vendors~clients.chunk.js",
+    "/assets/clients.chunk.js",
+    "/assets/clients.b8e0908690c6dd885340.hot-update.js"
   ],
   "products": [
-    "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
     "/assets/products.chunk.js"
   ],
   "reports": [
-    "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
     "/assets/reports.chunk.js"
   ],
   "reservations": [
-    "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
     "/assets/reservations.chunk.js"
   ],
   "not-found": [
-    "/assets/accounting~clients~home~not-found~products~reports~reservations.chunk.js",
     "/assets/not-found.chunk.js"
   ],
   "graphql-tag": [

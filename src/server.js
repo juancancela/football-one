@@ -52,10 +52,14 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 const app = express();
 
 //
+// Application JSON Body Parser
+// -----------------------------------------------------------------------------
+app.use(bodyParser.json());
+
+//
 // Application API
 // -----------------------------------------------------------------------------
 app.use(apiRouter);
-
 
 //
 // If you are using proxy from external machine, you can set TRUST_PROXY env
