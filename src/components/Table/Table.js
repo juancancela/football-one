@@ -9,83 +9,99 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import * as _ from 'lodash';
 import s from './Table.css';
 import * as actions from '../../actions/appActions';
+import * as c from '../../appConstants';
+
+const OPERATION_TYPE = {
+    EDIT: 'EDIT',
+    CREATE: 'CREATE'
+};
 
 class Table extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            showEntityDetails: false,
+            showEntityCreation: false,
             selectedEntity: null,
-            isAddNewEntityDialogVisible: false
+            emptyEntity: props.emptyEntity
         }
     };
 
-    renderHeader = (columns) => {
-        return (
-            <thead>
-                <tr>
-                    {columns.map(column => (column.show ? <th key={`${this.props.model}-${column.key}`}>{column.label}</th> : ''))}
-                </tr>
-            </thead>
-        );
-    };
+    renderHeader = columns =>
+        <thead>
+            <tr>
+                {columns.map(column => (column.show ? <th key={`${this.props.model}-${column.key}`}>{column.label}</th> : ''))}
+            </tr>
+        </thead>
 
-    editEntity = (entity) => this.setState({ selectedEntity: entity });
+    editEntity = entity => this.setState({ selectedEntity: entity, showEntityDetails: true });
 
-    renderRowControls = (entity) => {
-        return (
-            <div className="btn-group" role="group" aria-label="Controls">
-                <button type="button" className="btn btn-success" onClick={() => this.editEntity(entity)}>
-                    <i className="fas fa-edit"></i> Editar
+    renderRowControls = entity =>
+        <div className="btn-group" role="group" aria-label="Controls">
+            <button type="button" className="btn btn-success" onClick={() => this.editEntity(entity)}>
+                <i className="fas fa-edit"></i> Editar
                 </button>
-                <button type="button" className="btn btn-danger" onClick={() => this.removeEntity(entity.id)}>
-                    <i className="fas fa-trash"></i> Borrar
+            <button type="button" className="btn btn-danger" onClick={() => this.removeEntity(entity.id)}>
+                <i className="fas fa-trash"></i> Borrar
                 </button>
-            </div>
-        )
-    }
+        </div>
 
     renderRow = (entity, columns) => {
         const _filterEntityValues = (entity) => {
             const result = {};
             columns.forEach(column => {
-                column.show ? result[column.key] = entity[column.key] : '';
+                column.show ? result[column.key] = { value: entity[column.key], column } : '';
             });
             return Object.values(result);
         };
         const values = _filterEntityValues(entity);
-        console.log("Value => ", values);
         return (
             <tr key={`${this.props.model}-${entity.id}`}>
-                {values.map(value => (<td key={`${this.props.model}-${value}`}>{value}</td>))}
+                {values.map(value => {
+                    switch (value.column.type) {
+                        case c.DATA_TYPES.TEXT:
+                        case c.DATA_TYPES.DATE:
+                            return <td key={`${this.props.model}-${value.value}`}>{value.value}</td>;
+
+                        case c.DATA_TYPES.BOOLEAN:
+                            return <td key={`${this.props.model}-${value.value}`}>
+                                <i className={value.value === "true" ? 'fas fa-check' : 'fas fa-times'} />
+                            </td>
+                    }
+                })
+                }
                 <td>{this.renderRowControls(entity)}</td>
             </tr>
         )
     };
 
-    renderRows = (entities, columns) => {
-        return (
-            <tbody>
-                {entities.map(entity => this.renderRow(entity, columns))}
-            </tbody>
-        )
-    };
+    renderRows = (entities, columns) =>
+        <tbody>
+            {entities.map(entity => this.renderRow(entity, columns))}
+        </tbody>
 
     removeEntity = (id) => {
         const { model } = this.props;
         this.props.removeEntity(model, id);
     };
 
-    saveEntity = (updatedEntity) => {
+    updateEntity = (updatedEntity) => {
         const { model } = this.props;
-        this.setState({ selectedEntity: null });
+        this.setState({ selectedEntity: null, showEntityDetails: false });
         this.props.updateEntity(model, updatedEntity);
     };
 
-    cancelSaveEntity = () => this.setState({ selectedEntity: null });
+    saveEntity = (createdEntity) => {
+        const { model } = this.props;
+        this.setState({ selectedEntity: null, showEntityDetails: false, showEntityCreation: false });
+        this.props.createEntity(model, createdEntity);
+    }
 
-    toggleIsAddNewEntityDialogVisible = () => {
-        const isAddNewEntityDialogVisible = !this.state.isAddNewEntityDialogVisible;
-        this.setState({ isAddNewEntityDialogVisible });
+    cancelSaveEntity = () => this.setState({ selectedEntity: null, showEntityDetails: false, showEntityCreation: false });
+
+    toggleShowEntityCreation = () => {
+        let { showEntityCreation } = this.state;
+        this.setState({ showEntityCreation: !showEntityCreation });
     };
 
     renderTableControls = () => {
@@ -94,71 +110,65 @@ class Table extends Component {
             <div>
                 <button type="button"
                     className="btn btn-success"
-                    onClick={() => this.toggleIsAddNewEntityDialogVisible()}>
+                    onClick={() => this.toggleShowEntityCreation()}>
                     <i className="fas fa-plus-circle"></i> Agregar {name}
                 </button>
             </div>
         )
     };
 
-    updateSelectedEntityField = (selectedEntity, field, event) => {
-        selectedEntity[field] = event.target.value;
-        this.setState({ selectedEntity });
-    }
+    updateSelectedEntityField = (operationType, entity, field, event) => {
+        entity[field] = event.target.value;
+        switch (operationType) {
+            case OPERATION_TYPE.CREATE:
+                return this.setState({ emptyEntity: entity });
+            case OPERATION_TYPE.EDIT:
+                return this.setState({ selectedEntity: entity });
+        }
+    };
 
-    renderEntityDetails = (selectedEntity) => {
-        const entityFields = Object.keys(selectedEntity);
-        console.log("entity fields: ", entityFields);
+    renderEntityDetails = selectedEntity => this.renderEntityForm(OPERATION_TYPE.EDIT, selectedEntity);
+
+    renderEntityCreation = emptyEntity => this.renderEntityForm(OPERATION_TYPE.CREATE, emptyEntity);
+
+    renderEntityForm = (operationType, entity) => {
+        const { entityKeys } = this.props;
         return (
             <span>
-                {entityFields.map(field =>
-                    field != 'id' ? <div className="form-group">
-                        <label>{field}</label>
-                        <input value={selectedEntity[field]}
-                            onChange={event => this.updateSelectedEntityField(selectedEntity, field, event)}
-                            placeholder={selectedEntity[field]} />
-                    </div> : ''
+                {entityKeys.map(field => {
+                    if (operationType === OPERATION_TYPE.EDIT && field === 'id') return;
+                    return (<div className="form-group">
+                        <label className={s.tableEditLabel}>{field}</label>
+                        <input className={s.tableEditInput} value={entity[field]}
+                            onChange={event => this.updateSelectedEntityField(operationType, entity, field, event)}
+                            placeholder={entity[field]} />
+                    </div>)
+                }
                 )}
                 <div className="btn-group" role="group" aria-label="Controls">
-                    <button onClick={() => this.saveEntity(selectedEntity)} className="btn btn-primary">Guardar</button>
+                    <button onClick={() => operationType === OPERATION_TYPE.EDIT ? this.updateEntity(entity) : this.saveEntity(entity)}
+                        className="btn btn-primary">Guardar</button>
                     <button onClick={() => this.cancelSaveEntity()} className="btn btn-danger">Cancelar</button>
                 </div>
             </span>
         )
     };
 
-    renderCreateEntity = (entity) => {
-        return (
-            <div>
-                RENDER CREATE ENTITY
-            </div>
-        )
-    };
-
-    componentDidMount = () => {
-        const { model } = this.props;
-        this.props.fetchEntities(model);
-    };
+    componentDidMount = () => this.props.fetchEntities(this.props.model);
 
     render() {
         const { entities, isLoading, error, columns } = this.props;
-        const { selectedEntity, isAddNewEntityDialogVisible } = this.state;
-        if (error) {
-            return (<div>Error!</div>)
-        }
-        if (isLoading) {
-            return (<div>Loading...</div>)
-        }
-        if (!entities || entities.length === 0) {
-            return (<div>No data.</div>)
-        }
+        const { selectedEntity, emptyEntity, showEntityDetails, showEntityCreation } = this.state;
+        if (error) return (<div>Error!</div>)
+        if (isLoading) return (<div>Loading...</div>)
+        if (!entities || entities.length === 0) return (<div>No data.</div>)
         return (
             <div className={`${s.tableContainer}`}>
                 <div className={s.sectionContainer}>
-                    {!selectedEntity ? this.renderTableControls() : this.renderEntityDetails(selectedEntity)}
+                    {showEntityDetails ? this.renderEntityDetails(selectedEntity) : this.renderTableControls()}
                 </div>
                 <div className={s.sectionContainer}>
-                    {!isAddNewEntityDialogVisible ? '' : this.renderCreateEntity(entities[0])}
+                    {showEntityCreation ? this.renderEntityCreation(emptyEntity) : ''}
                 </div>
                 <table className={`${s.appTable} table table-dark`}>
                     {this.renderHeader(columns)}

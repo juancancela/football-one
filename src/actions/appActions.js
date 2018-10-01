@@ -14,6 +14,10 @@ export const updateEntitySuccess = data => ({
     type: c.RDX_UPDATE_ENTITY_SUCCESS
 });
 
+export const createEntitySuccess = data => ({
+    type: c.RDX_CREATE_ENTITY_SUCCESS
+});
+
 export const deleteEntitySuccess = data => ({
     type: c.RDX_DELETE_ENTITY_SUCCESS
 });
@@ -26,7 +30,7 @@ export const fetchEntitiesError = error => ({
 export const fetchEntities = (entityName) => dispatch => {
     dispatch(fetchingEntities());
     const options = {
-        uri: `http://localhost:3001/api/v1/${entityName}`,
+        uri: `${c.API_URL}/${entityName}`,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -47,7 +51,7 @@ export const fetchEntities = (entityName) => dispatch => {
 export const updateEntity = (entityName, updatedEntity) => dispatch => {
     const entityId = updatedEntity.id;
     const options = {
-        uri: `http://localhost:3001/api/v1/${entityName}/${entityId}`,
+        uri: `${c.API_URL}/${entityName}/${entityId}`,
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -64,7 +68,7 @@ export const updateEntity = (entityName, updatedEntity) => dispatch => {
 
 export const removeEntity = (entityName, id) => dispatch => {
     const options = {
-        uri: `http://localhost:3001/api/v1/${entityName}/${id}`,
+        uri: `${c.API_URL}/${entityName}/${id}`,
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -74,6 +78,24 @@ export const removeEntity = (entityName, id) => dispatch => {
     request(options, (err, rsp, body) => {
         if (!err && rsp.statusCode === 200) {
             return dispatch(fetchEntities(entityName));
+        }
+    });
+};
+
+export const createEntity = (entityName, createdEntity) => dispatch => {
+    const options = {
+        uri: `${c.API_URL}/${entityName}`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        json: createdEntity
+    };
+    request(options, (err, rsp, body) => {
+        if (!err && rsp.statusCode === 200) {
+            dispatch(createEntitySuccess());
+            dispatch(fetchEntities(entityName));
         }
     });
 };

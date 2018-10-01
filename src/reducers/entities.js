@@ -27,6 +27,7 @@ export default function entities(state = initialState, action) {
                 success: false,
                 error: action.error
             }
+        case c.RDX_CREATE_ENTITY_SUCCESS:    
         case c.RDX_UPDATE_ENTITY_SUCCESS:
         case c.RDX_DELETE_ENTITY_SUCCESS:
         default:

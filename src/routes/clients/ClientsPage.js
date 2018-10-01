@@ -10,53 +10,79 @@ const clientsColumns = () => {
     {
       key: 'name',
       label: 'Nombre',
+      type: c.DATA_TYPES.TEXT,
       show: true
     },
     {
       key: 'id',
       label: 'id',
+      type: c.DATA_TYPES.TEXT,
       show: true
     },
     {
       key: 'phone',
       label: 'Telefono',
+      type: c.DATA_TYPES.TEXT,
       show: true
     },
     {
       key: 'fixed',
       label: 'Fijo',
+      type: c.DATA_TYPES.BOOLEAN,
       show: true
     },
     {
       key: 'instagram',
       label: 'Instagram',
+      type: c.DATA_TYPES.TEXT,
       show: false
     },
     {
       key: 'facebook',
       label: 'Facebook',
+      type: c.DATA_TYPES.TEXT,
       show: false
     },
     {
       key: 'mail',
       label: 'Email',
+      type: c.DATA_TYPES.TEXT,
       show: true
     },
     {
       key: 'birthday',
       label: 'Cumpleaños',
+      type: c.DATA_TYPES.DATE,
       show: false
     }
   ]
-}
+};
+
+const createEmptyEntity = (entityKeys) => {
+  let emptyEntity = {}
+  entityKeys.forEach(key => {
+    emptyEntity[key] = ""
+  });
+
+  return emptyEntity;
+};
+
+const createEntityKeys = columns => columns.map(column => column.key)
+
 
 class ClientsPage extends React.Component {
   render() {
+    const columns = clientsColumns();
+    const entityKeys = createEntityKeys(columns);
+    const emptyEntity = createEmptyEntity(entityKeys);
     return (
       <div>
         <NavigationBar selectedOption={c.MENU_LABELS.CLIENTS} />
         <div className={s.container}>
-          <Table model="clients" name="cliente" columns={clientsColumns()}/>
+          <Table model="clients" name="cliente"
+            columns={columns}
+            entityKeys={entityKeys} 
+            emptyEntity={emptyEntity}/>
         </div>
       </div>
     );

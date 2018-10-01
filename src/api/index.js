@@ -1,29 +1,40 @@
 import express from 'express';
 import * as db from '../db';
 
-const apiRouter = express.Router();
+const r = express.Router();
 const MODELS = ['clients', 'reservations'];
 
 // Application CRUD API Operations
 //-----------------------------------------------------------------------------
-
 MODELS.forEach(m => {
-  apiRouter.get(`/api/v1/${m}`, (req, res) =>
-    db.findAll(`${m}`, (e, row) => res.send(e || row)),
-  );
-  apiRouter.get(`/api/v1/${m}/:id`, (req, res) =>
-    db.findById(`${m}`, req.params.id, (e, row) => res.send(e || row)),
-  );
-  apiRouter.post(`/api/v1/${m}`, (req, res) =>
-    db.insert(`${m}`, req.body, (e, row) => res.send(e || row)),
-  );
-  apiRouter.delete(`/api/v1/${m}/:id`, (req, res) =>
-    db.remove(`${m}`, req.params.id, (e, row) => res.send(e || row)),
-  );
-  apiRouter.patch(`/api/v1/${m}/:id`, (req, res) =>
-    db.update(`${m}`, req.params.id, req.body, (e, row) => res.send(e || row)),
-  );
+  console.log("m => ", m);
+  const a = '/api/v1/';
+  console.log("`${a}${m}` => ", `${a}${m}`);
+  r.get(`${a}${m}`, (req, res) => {
+    console.log('db.findAll');
+    db.findAll(`${m}`, (e, row) => res.send(e || row));
+  });
+
+  r.get(`${a}${m}/:id`, (req, res) => {
+    console.log('db.findById');
+    db.findById(`${m}`, req.params.id, (e, row) => res.send(e || row));
+  });
+  
+  r.post(`${a}${m}`, (req, res) => {
+    console.log('db.insert');
+    db.insert(`${m}`, req.body, (e, row) => res.send(e || row));
+  });
+
+  r.delete(`${a}${m}/:id`, (req, res) => {
+    console.log('db.remove');
+    db.remove(`${m}`, req.params.id, (e, row) => res.send(e || row));
+  });
+
+  r.patch(`${a}${m}/:id`, (req, res) => {
+    console.log('db.update');
+    db.update(`${m}`, req.params.id, req.body, (e, row) => res.send(e || row));
+  });
 });
 // -----------------------------------------------------------------------------
 
-export default apiRouter;
+export default r;

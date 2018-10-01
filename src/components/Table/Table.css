@@ -27,3 +27,11 @@
 .tableLink {
   color: #797979;
 }
+
+.tableEditLabel {
+  width: 200px;
+}
+
+.tableEditInput {
+  width: 500px;
+}
