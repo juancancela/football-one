@@ -17,7 +17,7 @@ export const MENU_OPTIONS = [
 export const DATA_TYPES = {
   BOOLEAN: 'BOOLEAN',
   DATE: 'DATE',
-  TEXT: 'TEXT'
+  TEXT: 'TEXT',
 };
 
 export const RDX_FETCH_ENTITIES = 'RDX_FETCH_ENTITIES';
@@ -29,4 +29,3 @@ export const RDX_DELETE_ENTITY_SUCCESS = 'RDX_DELETE_ENTITY_SUCCESS';
 export const RDX_CREATE_ENTITY_SUCCESS = 'RDX_CREATE_ENTITY_SUCCESS';
 
 export const API_URL = 'http://localhost:3000/api/v1';
-

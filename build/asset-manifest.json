@@ -2,6 +2,7 @@
   "accounting.js": "/assets/accounting.chunk.js",
   "client.js": "/assets/client.js",
   "clients.js": "/assets/clients.chunk.js",
+  "clients~products.js": "/assets/clients~products.chunk.js",
   "home.js": "/assets/home.chunk.js",
   "not-found.js": "/assets/not-found.chunk.js",
   "polyfills.js": "/assets/polyfills.chunk.js",
@@ -9,7 +10,7 @@
   "reports.js": "/assets/reports.chunk.js",
   "reservations.js": "/assets/reservations.chunk.js",
   "vendors.js": "/assets/vendors.chunk.js",
-  "vendors~clients.js": "/assets/vendors~clients.chunk.js",
+  "vendors~clients~products.js": "/assets/vendors~clients~products.chunk.js",
   "vendors~graphql-tag.js": "/assets/vendors~graphql-tag.chunk.js",
   "vendors~polyfills.js": "/assets/vendors~polyfills.chunk.js"
 }

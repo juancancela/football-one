@@ -1,29 +1,43 @@
 DROP TABLE IF EXISTS CLIENTS;
 DROP TABLE IF EXISTS PRODUCTS;
+DROP TABLE IF EXISTS ACCOUNTINGS;
 
 CREATE TABLE CLIENTS (
-	name TEXT(256),
-	id NUMBER,
-	phone TEXT(25),
-	fixed BOOLEAN,
-	instagram TEXT(256),
-	facebook TEXT(256),
-	mail TEXT(256),
-	birthday TEXT(40),
+	NAME TEXT(256),
+	ID NUMBER,
+	PHONE TEXT(25),
+	FIXED BOOLEAN,
+	INSTAGRAM TEXT(256),
+	FACEBOOK TEXT(256),
+	MAIL TEXT(256),
+	BIRTHDAY TEXT(40),
 	PRIMARY KEY (id),
 	CONSTRAINT unique_values UNIQUE (name, id, phone, instagram, facebook)
 );
 
 CREATE TABLE PRODUCTS (
-    id NUMBER,
-    name TEXT(256),
-    price REAL,
-    cost REAL,
-    profit REAL,
-    stock INTEGER,
+    ID NUMBER,
+    NAME TEXT(256),
+    PRICE REAL,
+    COST REAL,
+    STOCK INTEGER,
     PRIMARY KEY (id),
 	CONSTRAINT unique_values UNIQUE (name)
 );
+
+CREATE TABLE ACCOUNTINGS (
+	ACCOUNTINGS_DATE DATE,
+	PRODUCT_ID NUMBER,
+	CLIENT_ID NUMBER,
+	ADVANCE_PAYMENT REAL,
+	SUBSIDIZED BOOLEAN,
+	FOREIGN KEY(PRODUCT_ID) REFERENCES PRODUCTS(ID),
+	FOREIGN KEY(CLIENT_ID) REFERENCES CLIENTS(ID)
+);
+
+INSERT
+INTO PRODUCTS(id, name, price, cost, stock)
+VALUES (1, 'Cerveza Quilmes 1.5L', 100, 50, 34);
 
 INSERT 
 INTO CLIENTS(id, phone, name, fixed, instagram, facebook, mail, birthday) 
@@ -32,3 +46,7 @@ VALUES (1, '1556065555', 'Juan Cancela', 'true', 'instagram', 'facebook', 'cance
 INSERT 
 INTO CLIENTS(id, phone, name, fixed, instagram, facebook, mail, birthday) 
 VALUES (2, '1556065532', 'Pepe Cancela', 'false', 'instagram1', 'facebook1', 'cancela.juancarlos1@gmail.com', '11-05-1984');
+
+INSERT
+INTO ACCOUNTINGS(ACCOUNTINGS_DATE, PRODUCT_ID, CLIENT_ID, ADVANCE_PAYMENT, SUBSIDIZED)
+values ('2018-12-30', 1, 2, 25, 'false');

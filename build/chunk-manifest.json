@@ -14,11 +14,13 @@
     "/assets/accounting.chunk.js"
   ],
   "clients": [
-    "/assets/vendors~clients.chunk.js",
-    "/assets/clients.chunk.js",
-    "/assets/clients.fcdce27cc9aac8608579.hot-update.js"
+    "/assets/vendors~clients~products.chunk.js",
+    "/assets/clients~products.chunk.js",
+    "/assets/clients.chunk.js"
   ],
   "products": [
+    "/assets/vendors~clients~products.chunk.js",
+    "/assets/clients~products.chunk.js",
     "/assets/products.chunk.js"
   ],
   "reports": [

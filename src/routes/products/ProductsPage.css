@@ -1,1 +1,5 @@
 @import '../../components/variables.css';
+
+.container {
+  margin: 3px;
+}

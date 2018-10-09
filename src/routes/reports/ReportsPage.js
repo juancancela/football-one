@@ -9,6 +9,7 @@ class ReportsPage extends React.Component {
     return (
       <div>
         <NavigationBar selectedOption={c.MENU_LABELS.REPORTS} />
+        Not Yet Implemented
       </div>
     );
   }

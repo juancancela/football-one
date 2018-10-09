@@ -2,14 +2,14 @@ import express from 'express';
 import * as db from '../db';
 
 const r = express.Router();
-const MODELS = ['clients', 'reservations'];
+const MODELS = ['clients', 'reservations', 'products'];
 
 // Application CRUD API Operations
 //-----------------------------------------------------------------------------
 MODELS.forEach(m => {
-  console.log("m => ", m);
+  console.log('m => ', m);
   const a = '/api/v1/';
-  console.log("`${a}${m}` => ", `${a}${m}`);
+  console.log('`${a}${m}` => ', `${a}${m}`);
   r.get(`${a}${m}`, (req, res) => {
     console.log('db.findAll');
     db.findAll(`${m}`, (e, row) => res.send(e || row));
@@ -19,7 +19,7 @@ MODELS.forEach(m => {
     console.log('db.findById');
     db.findById(`${m}`, req.params.id, (e, row) => res.send(e || row));
   });
-  
+
   r.post(`${a}${m}`, (req, res) => {
     console.log('db.insert');
     db.insert(`${m}`, req.body, (e, row) => res.send(e || row));

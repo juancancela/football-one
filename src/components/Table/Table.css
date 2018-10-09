@@ -9,9 +9,13 @@
   margin-bottom: 5px;
 };
 
+.rowContainer {
+  display: grid;
+  grid-template-columns: 600px 1fr;
+}
+
 .appTable {
   color: #797979;
-  max-width: 500px;
   table-layout: fixed; width: 100%
 }
 
